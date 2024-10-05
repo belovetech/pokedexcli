@@ -50,8 +50,11 @@ func startRepl() string {
 			if err != nil {
 				fmt.Println("Error: ", err)
 			}
+			fmt.Print(" pokedex > ")
+			continue
 		} else {
 			fmt.Println("Unknown command: ", command)
+			continue
 		}
 
 	}
