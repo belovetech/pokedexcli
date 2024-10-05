@@ -1,3 +1,3 @@
-module github.com/belovetech/pokedex-cli.git
+module github.com/belovetech/pokedexcli.git
 
 go 1.22.4
