@@ -2,11 +2,13 @@ package main
 
 import (
 	"fmt"
+
+	"github.com/belovetech/pokedexcli.git/internal/pokecache"
 )
 
-func commandMapb(cfg *Config) error {
+func commandMapb(cfg *Config, cache *pokecache.Cache) error {
 
-	location, err := cfg.pokeapiClient.ListLocationAreas(cfg.previousLocationURL)
+	location, err := cfg.pokeapiClient.ListLocationAreas(cfg.previousLocationURL, cache)
 	if err != nil {
 		return err
 	}

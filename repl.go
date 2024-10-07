@@ -5,12 +5,14 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/belovetech/pokedexcli.git/internal/pokecache"
 )
 
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(*Config) error
+	callback    func(*Config, *pokecache.Cache) error
 }
 
 func getCommands() map[string]cliCommand {
@@ -38,7 +40,7 @@ func getCommands() map[string]cliCommand {
 	}
 }
 
-func startRepl(cfg *Config) string {
+func startRepl(cfg *Config, cache *pokecache.Cache) string {
 	scanner := bufio.NewScanner(os.Stdin)
 	fmt.Print(" > ")
 
@@ -63,7 +65,7 @@ func startRepl(cfg *Config) string {
 			continue
 		}
 
-		err := command.callback(cfg)
+		err := command.callback(cfg, cache)
 		if err != nil {
 			fmt.Println("Error: ", err)
 		}

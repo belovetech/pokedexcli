@@ -1,6 +1,11 @@
 package main
 
-import "github.com/belovetech/pokedexcli.git/internal/pokeapi"
+import (
+	"time"
+
+	"github.com/belovetech/pokedexcli.git/internal/pokeapi"
+	"github.com/belovetech/pokedexcli.git/internal/pokecache"
+)
 
 type Config struct {
 	pokeapiClient       *pokeapi.Client
@@ -13,5 +18,9 @@ func main() {
 		pokeapiClient: &pokeapi.Client{},
 	}
 
-	startRepl(&cfg)
+	interval := 5 * time.Minute // 5 minutes
+	cache := pokecache.NewCache(interval)
+
+	startRepl(&cfg, cache)
+
 }
