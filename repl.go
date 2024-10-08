@@ -12,7 +12,7 @@ import (
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(*Config, *pokecache.Cache) error
+	callback    func(*Config, *pokecache.Cache, *string) error
 }
 
 func getCommands() map[string]cliCommand {
@@ -37,6 +37,11 @@ func getCommands() map[string]cliCommand {
 			description: " Show the previous 20 location areas in the Pokemon world",
 			callback:    commandMapb,
 		},
+		"explore": {
+			name:        "explore",
+			description: "Explore a location area",
+			callback:    commandExplore,
+		},
 	}
 }
 
@@ -56,6 +61,10 @@ func startRepl(cfg *Config, cache *pokecache.Cache) string {
 
 		commandName := words[0]
 		availableCommands := getCommands()
+		firstArg := ""
+		if len(words) > 1 {
+			firstArg = words[1]
+		}
 
 		command, exists := availableCommands[commandName]
 
@@ -65,12 +74,13 @@ func startRepl(cfg *Config, cache *pokecache.Cache) string {
 			continue
 		}
 
-		err := command.callback(cfg, cache)
+		// fmt.Println()
+		err := command.callback(cfg, cache, &firstArg)
 		if err != nil {
 			fmt.Println("Error: ", err)
 		}
 
-		fmt.Print(" > ")
+		fmt.Print("\n > ")
 	}
 }
 

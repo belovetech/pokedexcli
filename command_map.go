@@ -6,7 +6,7 @@ import (
 	"github.com/belovetech/pokedexcli.git/internal/pokecache"
 )
 
-func commandMap(cfg *Config, cache *pokecache.Cache) error {
+func commandMap(cfg *Config, cache *pokecache.Cache, firstArg *string) error {
 
 	location, err := cfg.pokeapiClient.ListLocationAreas(cfg.nextLocationURL, cache)
 	if err != nil {
